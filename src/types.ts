@@ -1,4 +1,4 @@
-export type Category = 'All' | 'Historical' | 'Northern Areas' | 'Urban' | 'Lakes' | 'Coastal' | 'Valleys';
+export type Category = 'All' | 'Historical Forts' | 'Lakes & Dams' | 'Hidden Waterfalls' | 'Desi Food Trails' | 'Cultural Walled Cities' | 'Northern Areas';
 
 export type TabType = 'explore' | 'saved' | 'trips';
 

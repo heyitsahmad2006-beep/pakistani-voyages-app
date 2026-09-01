@@ -87,7 +87,7 @@ export const DESTINATIONS: Destination[] = [
     id: 'badshahi-mosque',
     name: 'Badshahi Mosque',
     tagline: 'Mughal Architectural Masterpiece in Lahore',
-    category: 'Historical',
+    category: 'Historical Forts',
     categoryLabel: 'Heritage & Architecture',
     categoryIcon: 'temple_buddhist',
     province: 'Punjab',
@@ -335,7 +335,7 @@ export const DESTINATIONS: Destination[] = [
     id: 'mohenjo-daro',
     name: 'Mohenjo-daro',
     tagline: 'Mound of the Dead - 5,000 Year Old Ancient Metropolis',
-    category: 'Historical',
+    category: 'Historical Forts',
     categoryLabel: 'Archaeology & Heritage',
     categoryIcon: 'temple_buddhist',
     province: 'Sindh',
@@ -385,4 +385,4 @@ export const DESTINATIONS: Destination[] = [
   }
 ];
 
-export const CATEGORIES = ['All', 'Historical', 'Northern Areas', 'Urban', 'Lakes'] as const;
+export const CATEGORIES = ['All', 'Historical Forts', 'Lakes & Dams', 'Hidden Waterfalls', 'Desi Food Trails', 'Cultural Walled Cities', 'Northern Areas'] as const;

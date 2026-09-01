@@ -1,4 +1,4 @@
-import { WeatherDay } from '../types';
+import { Destination, WeatherDay } from '../types';
 
 export interface RouteResponse {
   destination: string;
@@ -6,6 +6,12 @@ export interface RouteResponse {
   googleMapsUrl: string;
   embedMapUrl: string;
   coordinates?: { lat: number; lng: number } | null;
+}
+
+export interface AISearchResponse {
+  query: string;
+  source: string;
+  destinations: Destination[];
 }
 
 /**
@@ -50,6 +56,30 @@ export async function fetchRouteInfo(
     return await response.json();
   } catch (error) {
     console.warn('Backend route API unavailable:', error);
+    return null;
+  }
+}
+
+/**
+ * Search AI-generated destinations across Pakistan using Gemini AI backend.
+ */
+export async function searchAIDestinations(
+  query?: string,
+  category?: string
+): Promise<Destination[] | null> {
+  try {
+    let url = '/api/ai/search?';
+    if (query) url += `query=${encodeURIComponent(query)}&`;
+    if (category) url += `category=${encodeURIComponent(category)}`;
+
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`AI Search API error: ${response.statusText}`);
+    }
+    const data: AISearchResponse = await response.json();
+    return data.destinations;
+  } catch (error) {
+    console.warn('AI search endpoint unavailable:', error);
     return null;
   }
 }

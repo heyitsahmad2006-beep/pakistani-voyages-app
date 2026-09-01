@@ -1,0 +1,29 @@
+# Node dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+coverage/
+
+# Python virtual environment & cache
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Logs & OS artifacts
+*.log
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env*
+!.env.example
+
+# IDEs & Editors
+.vscode/
+.idea/

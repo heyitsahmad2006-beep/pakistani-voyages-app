@@ -1,0 +1,6 @@
+{
+  "name": "Pakistani Voyages",
+  "description": "Discover Pakistan's heritage sites, majestic northern valleys, vibrant cities, weather forecasts, and route navigation.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

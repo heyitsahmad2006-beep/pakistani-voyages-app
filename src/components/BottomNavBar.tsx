@@ -84,26 +84,6 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = ({
           </span>
           <span className="text-[10px] font-semibold tracking-widest uppercase">Trips</span>
         </button>
-
-        {/* Profile */}
-        <button
-          id="bottom-tab-profile"
-          aria-label="Profile"
-          onClick={() => setActiveTab('profile')}
-          className={`flex flex-col items-center justify-center cursor-pointer transition-all duration-200 w-16 ${
-            activeTab === 'profile'
-              ? 'text-[#c5a059] font-bold scale-105'
-              : 'text-white/40 hover:text-white'
-          }`}
-        >
-          <span
-            className="material-symbols-outlined mb-0.5 text-[22px]"
-            style={{ fontVariationSettings: activeTab === 'profile' ? "'FILL' 1" : "'FILL' 0" }}
-          >
-            person
-          </span>
-          <span className="text-[10px] font-semibold tracking-widest uppercase">Profile</span>
-        </button>
       </div>
     </nav>
   );

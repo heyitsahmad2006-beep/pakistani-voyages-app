@@ -1,6 +1,6 @@
 export type Category = 'All' | 'Historical' | 'Northern Areas' | 'Urban' | 'Lakes' | 'Coastal' | 'Valleys';
 
-export type TabType = 'explore' | 'saved' | 'trips' | 'profile';
+export type TabType = 'explore' | 'saved' | 'trips';
 
 export interface WeatherDay {
   day: string; // e.g. "Mon"

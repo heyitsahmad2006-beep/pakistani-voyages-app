@@ -1,6 +1,5 @@
 import React from 'react';
 import { TabType } from '../types';
-import { USER_AVATAR_URL } from '../data/destinations';
 
 interface HeaderProps {
   activeTab: TabType;
@@ -8,7 +7,6 @@ interface HeaderProps {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
   onOpenMenu: () => void;
-  onOpenProfile: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -17,7 +15,6 @@ export const Header: React.FC<HeaderProps> = ({
   searchQuery,
   setSearchQuery,
   onOpenMenu,
-  onOpenProfile,
 }) => {
   return (
     <>
@@ -46,19 +43,7 @@ export const Header: React.FC<HeaderProps> = ({
               Pakistani <span className="text-[#c5a059] font-serif italic">Voyages</span>
             </h1>
           </div>
-          <button
-            id="mobile-profile-btn"
-            aria-label="Profile"
-            onClick={onOpenProfile}
-            className="hover:opacity-80 transition-opacity active:scale-95 duration-200 overflow-hidden rounded-full w-8 h-8 flex items-center justify-center border border-white/10 cursor-pointer ring-1 ring-[#c5a059]/40"
-          >
-            <img
-              alt="User Profile"
-              className="w-full h-full object-cover"
-              src={USER_AVATAR_URL}
-              referrerPolicy="no-referrer"
-            />
-          </button>
+          <div className="w-8 h-8" />
         </div>
       </header>
 
@@ -165,20 +150,6 @@ export const Header: React.FC<HeaderProps> = ({
               title="Traveler Toolkit & Guides"
             >
               <span className="material-symbols-outlined text-[18px]">info</span>
-            </button>
-
-            <button
-              id="desktop-profile-btn"
-              onClick={onOpenProfile}
-              className="overflow-hidden rounded-full w-9 h-9 border border-white/20 hover:border-[#c5a059] transition-all cursor-pointer shadow-sm"
-              title="My Account"
-            >
-              <img
-                alt="User Profile"
-                className="w-full h-full object-cover"
-                src={USER_AVATAR_URL}
-                referrerPolicy="no-referrer"
-              />
             </button>
           </div>
         </div>

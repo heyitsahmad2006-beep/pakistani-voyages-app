@@ -12,7 +12,6 @@ import { ExploreDashboard } from './components/ExploreDashboard';
 import { DestinationDetail } from './components/DestinationDetail';
 import { SavedTab } from './components/SavedTab';
 import { TripsTab } from './components/TripsTab';
-import { ProfileTab } from './components/ProfileTab';
 import { LiveDirectionsModal } from './components/LiveDirectionsModal';
 import { FilterModal } from './components/FilterModal';
 import { QuickGuideDrawer } from './components/QuickGuideDrawer';
@@ -137,10 +136,6 @@ export default function App() {
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
             onOpenMenu={() => setIsMenuOpen(true)}
-            onOpenProfile={() => {
-              setActiveTab('profile');
-              setSelectedDestination(null);
-            }}
           />
 
           {/* Active Tab View */}
@@ -174,10 +169,6 @@ export default function App() {
               destinations={DESTINATIONS}
               onSelectDestination={handleSelectDestination}
             />
-          )}
-
-          {activeTab === 'profile' && (
-            <ProfileTab savedCount={savedDestinationIds.length} />
           )}
 
           {/* Bottom Nav Bar (Mobile Blueprint Execution) */}

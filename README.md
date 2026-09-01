@@ -1,20 +1,36 @@
+---
+title: Pakistani Voyages
+emoji: 🏔️
+colorFrom: green
+colorTo: blue
+sdk: docker
+pinned: false
+---
+
 <div align="center">
 <img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
 </div>
 
-# Run and deploy your AI Studio app
+# Pakistani Voyages - Full-Stack Travel Application
 
-This contains everything you need to run your app locally.
+Discover the breath-taking beauty, alpine weather, and heritage routes of Pakistan. Powered by React, Python FastAPI, OpenMeteo Weather API, and Google Maps.
 
-View your app in AI Studio: https://ai.studio/apps/09dee611-482d-40e3-9aa2-9b0f85aa4d69
+## Features
+
+- **Alpine & Regional Destinations**: Explore Naran Valley, Badshahi Mosque, Hunza Valley, Skardu & Deosai, Fairy Meadows, and Mohenjo-daro.
+- **Live Weather Integration**: 14-day live weather forecasts proxied via FastAPI from the free OpenMeteo API.
+- **Google Maps Navigation**: Real-time directions and route waypoints from major Pakistani hubs (Islamabad, Lahore, Peshawar).
+- **1-Click Execution System**: Double-click `start_app.bat` to automatically build the frontend, initialize Python `venv`, and start the FastAPI server on port 8000.
+- **Dockerized Deployment**: Multi-stage `Dockerfile` ready for Hugging Face Spaces and cloud container hosting.
 
 ## Run Locally
 
-**Prerequisites:**  Node.js
-
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+1. Double-click `start_app.bat` (Windows) or run:
+   ```bash
+   npm install
+   npm run build
+   python -m venv venv
+   .\venv\Scripts\pip install -r backend/requirements.txt
+   python -m uvicorn backend.main:app --host 0.0.0.0 --port 8000
+   ```
+2. Open `http://localhost:8000` in your web browser.

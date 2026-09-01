@@ -131,7 +131,7 @@ export const ExploreDashboard: React.FC<ExploreDashboardProps> = ({
       </section>
 
       {/* Broad Categories Row */}
-      <section className="mb-10 -mx-6 px-6 overflow-x-auto hide-scrollbar">
+      <section className="mb-6 -mx-6 px-6 overflow-x-auto hide-scrollbar">
         <div className="flex space-x-2.5 pb-2 w-max">
           {CATEGORIES.map((category) => {
             const isSelected = selectedCategory === category;
@@ -150,6 +150,33 @@ export const ExploreDashboard: React.FC<ExploreDashboardProps> = ({
               </button>
             );
           })}
+        </div>
+      </section>
+
+      {/* Quick AI Search Prompt Chips */}
+      <section className="mb-10 -mx-6 px-6 overflow-x-auto hide-scrollbar">
+        <div className="flex space-x-2 pb-1 w-max items-center">
+          <span className="text-[10px] uppercase tracking-widest text-[#c5a059] font-bold mr-2 flex items-center gap-1">
+            <span className="material-symbols-outlined text-[14px]">auto_awesome</span>
+            <span>AI Quick Prompts:</span>
+          </span>
+          {[
+            { label: '🏰 Historical Forts', query: 'Historical Forts' },
+            { label: '🌊 Lakes & Dams', query: 'Lakes & Dams' },
+            { label: '🏞️ Waterfalls', query: 'Waterfalls' },
+            { label: '🍗 Peshawari Chapli Kabab', query: 'Peshawari Chapli Kabab' },
+            { label: '🌲 Murree Mall Road', query: 'Murree Mall Road' },
+            { label: '🕌 Androon Lahore', query: 'Androon Lahore Walled City' },
+            { label: '🍲 Desi Food Trails', query: 'Desi Food Trails' }
+          ].map((item) => (
+            <button
+              key={item.label}
+              onClick={() => setSearchQuery(item.query)}
+              className="px-3.5 py-1.5 rounded-full bg-[#141414] hover:bg-[#1f1f1f] text-white/70 hover:text-[#c5a059] text-xs font-normal border border-white/5 transition-all cursor-pointer"
+            >
+              {item.label}
+            </button>
+          ))}
         </div>
       </section>
 

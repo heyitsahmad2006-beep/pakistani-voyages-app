@@ -491,15 +491,52 @@ def generate_dynamic_fallback(prompt: str, category: Optional[str]):
       }
     ]
 
-# Serve React static assets if dist exists
-if os.path.exists(DIST_DIR):
-    app.mount("/assets", StaticFiles(directory=os.path.join(DIST_DIR, "assets")), name="assets")
+@app.get("/api/explore")
+def get_explore_ai(
+    query: Optional[str] = Query(None, description="Search query"),
+    category: Optional[str] = Query(None, description="Category filter")
+):
+    """
+    Alias for /api/ai/search endpoint for backward compatibility.
+    """
+    return search_ai_destinations(query=query, category=category)
 
-    @app.get("/{full_path:path}")
-    async def serve_spa(full_path: str):
-        if full_path.startswith("api/"):
-            raise HTTPException(status_code=404, detail="API route not found")
-        file_path = os.path.join(DIST_DIR, full_path)
-        if os.path.exists(file_path) and os.path.isfile(file_path):
-            return FileResponse(file_path)
-        return FileResponse(os.path.join(DIST_DIR, "index.html"))
+# Dynamically locate dist directory
+def get_dist_dir():
+    candidates = [
+        DIST_DIR,
+        os.path.join(os.getcwd(), "dist"),
+        os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "dist"),
+        "/app/dist"
+    ]
+    for d in candidates:
+        if os.path.exists(d):
+            return d
+    return DIST_DIR
+
+# Mount assets directory if it exists
+target_dist_dir = get_dist_dir()
+assets_path = os.path.join(target_dist_dir, "assets")
+if os.path.exists(assets_path):
+    app.mount("/assets", StaticFiles(directory=assets_path), name="assets")
+
+@app.get("/{full_path:path}")
+async def serve_spa(full_path: str):
+    """
+    Catch-all SPA router: serves React static files or index.html for client-side routing.
+    Excludes /api/ routes.
+    """
+    if full_path.startswith("api/") or full_path == "api":
+        raise HTTPException(status_code=404, detail="API route not found")
+    
+    current_dist = get_dist_dir()
+    file_path = os.path.join(current_dist, full_path)
+    if full_path and os.path.exists(file_path) and os.path.isfile(file_path):
+        return FileResponse(file_path)
+    
+    index_file = os.path.join(current_dist, "index.html")
+    if os.path.exists(index_file):
+        return FileResponse(index_file)
+    
+    raise HTTPException(status_code=404, detail="Frontend build (dist/index.html) not found. Run 'npm run build' first.")
+

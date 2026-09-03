@@ -9,7 +9,6 @@ __pycache__
 .env.local
 .env.development
 .env.test
-dist
 build
 *.log
 npm-debug.log*

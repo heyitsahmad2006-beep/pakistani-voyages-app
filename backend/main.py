@@ -507,15 +507,28 @@ def get_dist_dir():
         DIST_DIR,
         os.path.join(os.getcwd(), "dist"),
         os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "dist"),
-        "/app/dist"
+        "/app/dist",
+        os.path.abspath("dist")
     ]
+    for d in candidates:
+        if os.path.exists(os.path.join(d, "index.html")):
+            return d
     for d in candidates:
         if os.path.exists(d):
             return d
     return DIST_DIR
 
-# Mount assets directory if it exists
+# Ensure dist exists or attempt automatic build if Node is available
 target_dist_dir = get_dist_dir()
+if not os.path.exists(os.path.join(target_dist_dir, "index.html")):
+    try:
+        import subprocess
+        print("dist/index.html not found, attempting auto-build: npm run build...")
+        subprocess.run(["npm", "run", "build"], check=False, timeout=60, capture_output=True)
+        target_dist_dir = get_dist_dir()
+    except Exception as err:
+        print(f"Auto-build warning: {err}")
+
 assets_path = os.path.join(target_dist_dir, "assets")
 if os.path.exists(assets_path):
     app.mount("/assets", StaticFiles(directory=assets_path), name="assets")
@@ -530,13 +543,36 @@ async def serve_spa(full_path: str):
         raise HTTPException(status_code=404, detail="API route not found")
     
     current_dist = get_dist_dir()
-    file_path = os.path.join(current_dist, full_path)
-    if full_path and os.path.exists(file_path) and os.path.isfile(file_path):
-        return FileResponse(file_path)
     
+    # 1. Serve direct static files (CSS, JS, images, icons, etc.)
+    if full_path:
+        file_path = os.path.join(current_dist, full_path)
+        if os.path.exists(file_path) and os.path.isfile(file_path):
+            return FileResponse(file_path)
+    
+    # 2. Serve React SPA index.html
     index_file = os.path.join(current_dist, "index.html")
     if os.path.exists(index_file):
         return FileResponse(index_file)
     
-    raise HTTPException(status_code=404, detail="Frontend build (dist/index.html) not found. Run 'npm run build' first.")
+    # 3. Fallback inline HTML loader if dist/index.html is missing
+    fallback_html = """<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pakistani Voyages</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#0a0a0a] text-white flex items-center justify-center min-h-screen p-6 font-sans">
+    <div class="max-w-md text-center space-y-4">
+        <h1 class="text-3xl font-light">Pakistani <span class="text-[#c5a059] italic font-serif">Voyages</span></h1>
+        <p class="text-sm text-white/60">Frontend build is initializing. Please refresh in a few seconds or trigger a build.</p>
+        <button onclick="window.location.reload()" class="px-5 py-2 bg-[#c5a059] text-black font-bold text-xs rounded-full uppercase tracking-wider">Refresh Page</button>
+    </div>
+</body>
+</html>"""
+    from fastapi.responses import HTMLResponse
+    return HTMLResponse(content=fallback_html, status_code=200)
+
 
